@@ -4,14 +4,29 @@ import com.example.springproject.aggregate.club.CommunityMember;
 import com.example.springproject.service.MemberService;
 import com.example.springproject.service.sdo.MemberCdo;
 import com.example.springproject.shared.NameValueList;
+import com.example.springproject.store.MemberStore;
+import io.namoosori.travelclub.spring.util.exception.MemberDuplicationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class MemberServiceLogic implements MemberService {
+    private MemberStore memberStore;
+
+    public MemberServiceLogic(MemberStore memberStore) {
+        this.memberStore = memberStore;
+    }
+
     @Override
     public String registerMember(MemberCdo member) {
+        String email = member.getEmail();
+        CommunityMember foundedMember = memberStore.retrieveByEmail(email);
+
+        if (foundedMember != null){
+            throw new MemberDuplicationException("Member already exist");
+        }
         return null;
     }
 

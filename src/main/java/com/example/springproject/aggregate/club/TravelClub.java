@@ -1,30 +1,32 @@
 package com.example.springproject.aggregate.club;
 
+
 import com.example.springproject.aggregate.Entity;
 import com.example.springproject.shared.NameValue;
 import com.example.springproject.shared.NameValueList;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.logging.log4j.util.StringBuilders;
-import org.springframework.format.datetime.joda.MillisecondInstantPrinter;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public class TravelClub extends Entity {
-    private static final int MINIMUM_NAME_LENGTH = 3;
-    private static final int MINIMUM_INTRO_LENGTH = 10;
+    //
+    private static final int MINIMUM_NAME_LENGTH =  3;
+    private static final int MINIMUM_INTRO_LENGTH =  10;
 
     private String name;
     private String intro;
     private long foundationTime;
 
-    public TravelClub(String id){
+    public TravelClub(String id) {
+        //
         super(id);
     }
 
-    public TravelClub(String name, String intro){
+    public TravelClub(String name, String intro) {
+        //
         super();
         this.name = name;
         this.intro = intro;
@@ -33,33 +35,40 @@ public class TravelClub extends Entity {
 
     @Override
     public String toString() {
+        //
         StringBuilder builder = new StringBuilder();
 
         builder.append("Travel Club Id:").append(id);
         builder.append(", name:").append(name);
-        builder.append(", intro").append(intro);
+        builder.append(", intro:").append(intro);
         builder.append(", foundation day:").append(foundationTime);
 
         return builder.toString();
     }
 
-    public void checkValidation(){
+    public void checkValidation() {
+        //
         checkNameValidation(name);
         checkIntroValidation(intro);
     }
-    public void checkNameValidation(String name){
-        if(name.length() < TravelClub.MINIMUM_NAME_LENGTH){
+
+    private void checkNameValidation(String name) {
+        //
+        if (name.length() < TravelClub.MINIMUM_NAME_LENGTH) {
             throw new IllegalArgumentException("\t > Name should be longer than " + TravelClub.MINIMUM_NAME_LENGTH);
         }
     }
-    public void checkIntroValidation(String intro){
-        if(intro.length() < TravelClub.MINIMUM_INTRO_LENGTH){
+
+    private void checkIntroValidation(String intro) {
+        //
+        if (intro.length() < TravelClub.MINIMUM_INTRO_LENGTH) {
             throw new IllegalArgumentException("\t > Intro should be longer than " + TravelClub.MINIMUM_INTRO_LENGTH);
         }
     }
 
-    public void modifiyValues(NameValueList nameValues){
-        for(NameValue nameValue : nameValues.getNameValues()){
+    public void modifyValues(NameValueList nameValues) {
+        //
+        for (NameValue nameValue : nameValues.getNameValues()) {
             String value = nameValue.getValue();
             switch (nameValue.getName()) {
                 case "name":
@@ -73,6 +82,7 @@ public class TravelClub extends Entity {
             }
         }
     }
+
     public static TravelClub sample() {
         //
         String name = "JavaTravelClub";
